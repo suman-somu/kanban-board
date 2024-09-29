@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
+import Header from './components/Header/Header';
+import Board from './components/Board/Board';
 import './App.css';
 
 function App() {
+  const [grouping, setGrouping] = useState('status');
+  const [ordering, setOrdering] = useState('priority');
+
+  useEffect(() => {
+    const savedState = localStorage.getItem('kanbanState');
+    if (savedState) {
+      const { grouping, ordering } = JSON.parse(savedState);
+      setGrouping(grouping);
+      setOrdering(ordering);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('kanbanState', JSON.stringify({ grouping, ordering }));
+  }, [grouping, ordering]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header 
+        grouping={grouping}
+        ordering={ordering}
+        onGroupingChange={setGrouping}
+        onOrderingChange={setOrdering}
+      />
+      <Board grouping={grouping} ordering={ordering} />
     </div>
   );
 }
