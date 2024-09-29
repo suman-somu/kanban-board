@@ -30,7 +30,6 @@ const statusIcons = {
 };
 
 const Card = ({ ticket, user, grouping }) => {
-  console.log('card', ticket, grouping);
   const PriorityIcon = priorityIcons[ticket.priority];
   const StatusIcon = statusIcons[ticket.status];
 
@@ -57,7 +56,7 @@ const Card = ({ ticket, user, grouping }) => {
         )}
         {ticket.tag.map((tag, index) => (
           <div key={index} className="tag feature-tag">
-            <FeatureRequestIcon />
+            <div className="feature-icon"/>
             <span>{tag}</span>
           </div>
         ))}

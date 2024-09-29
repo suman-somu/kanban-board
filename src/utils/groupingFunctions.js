@@ -1,8 +1,18 @@
 export const groupByStatus = (tickets) => {
-    return tickets.reduce((acc, ticket) => {
+    const statusTypes = ['todo', 'inprogress', 'done', 'backlog', 'cancelled'];
+    const grouped = tickets.reduce((acc, ticket) => {
         (acc[ticket.status] = acc[ticket.status] || []).push(ticket);
         return acc;
     }, {});
+
+    // Ensure all status types are included
+    statusTypes.forEach(status => {
+        if (!grouped[status]) {
+            grouped[status] = [];
+        }
+    });
+
+    return grouped;
 };
 
 export const groupByUser = (tickets, users) => {
